@@ -9,13 +9,15 @@ WHITE = 255, 255, 255
 BLACK = 0, 0, 0
 RED = 255,0,0
 size = width, height = 480, 480
+size_plus = 480, 580
 cell_width = (width/n_gezi)
 cell_height = (height/n_gezi)
 font_size = 60
 
 def init():
     pygame.init()
-    screen = pygame.display.set_mode(size)
+    #screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode(size_plus)# (size)
     screen.fill(WHITE)
 
     # Horizontal lines
@@ -139,7 +141,16 @@ def writeScreen(screen, txt, line=1):
     label = myfont.render(txt, 50, (0,200,0))
     screen.blit(label, ((width/2)-(font_size/3)*len(txt), (height/4)*line))
     refresh()
+def writeScreen_4_show(screen, txt, line=1):
+    screen.fill(WHITE, (0, 480, screen.get_width(), screen.get_height()// 5))
+    # initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
+    myfont = pygame.font.SysFont("monospace", 20)
+
+    # render text
+    label = myfont.render(txt, 50, (0,255,0))
+    screen.blit(label, (64, 548))
+    # screen.blit(label, ((width/0.8)-(font_size/2.8)*len(txt), (height/3.5)*line))
+    refresh()
 
 def refresh():
     pygame.display.update()
-    

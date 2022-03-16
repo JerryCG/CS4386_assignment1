@@ -1,6 +1,9 @@
-import copy 
+import copy
+from python.simulation import Simulation
+from python.minimax2 import MiniMax2
 from math import inf as infinity
-class AIPlayer(object):
+
+class AIPlayerSimulationPlusMiniMax2(object):
     def __init__(self, name, symbole, isAI=False):
         self.name = name
         self.symbole = symbole
@@ -20,18 +23,25 @@ class AIPlayer(object):
         return self.score
     def add_score(self,score):
     	self.score+=score
-    
+
     def empty_cells(self,state):
         cells = []
-
         for x, row in enumerate(state):
             for y, cell in enumerate(row):
                 if cell is None:
                     cells.append([x, y])
-
         return cells
     
-    def get_move(self,state, player):
-        games = self.empty_cells(state)
-        random_move=games[0]
-        return random_move   
+    def get_move(self,state,player):
+        root = MiniMax2(state=state, symbol=player)
+        hasbestmove, result = root.normal()
+        if hasbestmove:
+            return result
+        else:
+            if len(result) == 0:  
+                root = Simulation(state=state, symbol=player)
+                selected_move = root.simulation(200)
+            else:
+                root = Simulation(state=state, symbol=player, bad_actions=result)
+                selected_move = root.simulation(200)
+        return selected_move
