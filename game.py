@@ -254,27 +254,19 @@ def gameLoop(screen, p1, p2):
         # if player1 is human
         else:
             # Get the human player input
-<<<<<<< HEAD
             #tic = time.time()
-=======
-            tic = time.time()
->>>>>>> ed752e592d4351b07f1c0fb10e91a70fcd17484c
             x, y = gui.playerInput(screen)
             # Check if the cell is not already used
             while not grid.isMoveAllowed(x, y):
                 x, y = gui.playerInput(screen)
-<<<<<<< HEAD
             #toc = time.time()
-=======
-            toc = time.time()
->>>>>>> ed752e592d4351b07f1c0fb10e91a70fcd17484c
             grid.update(x, y, playerTurn.symbole)
             gui.drawSymbole(screen, (x, y), playerTurn.symbole)
             print("Player1 (Black,Human), move is:",x,y)
-        print("Player1 (Black) Time:", (toc - tic))
-        if (toc - tic) > TIME_LIMIT:
-            print("Timed out, game over. Player2 wins.")
-            return "-1"
+        #print("Player1 (Black) Time:", (toc - tic))
+        #if (toc - tic) > TIME_LIMIT:
+            #print("Timed out, game over. Player2 wins.")
+            #return "-1"
 
     while(not gridFull(grid.grid)):
         # Switch player
@@ -393,20 +385,12 @@ def gameLoop(screen, p1, p2):
                 print("Player1 (Black,PYTHON), move is:",x,y)
             else:
                 # Get the human player input
-<<<<<<< HEAD
                 #tic = time.time()
-=======
-                tic = time.time()
->>>>>>> ed752e592d4351b07f1c0fb10e91a70fcd17484c
                 x, y = gui.playerInput(screen)
                 # Check if the cell is not already used
                 while not grid.isMoveAllowed(x, y):
                     x, y = gui.playerInput(screen)
-<<<<<<< HEAD
                 #toc = time.time()
-=======
-                toc = time.time()
->>>>>>> ed752e592d4351b07f1c0fb10e91a70fcd17484c
                 grid.update(x, y, playerTurn.symbole)
                 gui.drawSymbole(screen, (x, y), playerTurn.symbole)
                 print("Player1 (Black,Human), move is:",x,y)
