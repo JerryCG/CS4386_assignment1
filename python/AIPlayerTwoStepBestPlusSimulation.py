@@ -1,9 +1,9 @@
 import copy
 from python.simulation import Simulation
-from python.minimax2 import MiniMax2
+from python.twostepbest import TwoStepBest
 from math import inf as infinity
 
-class AIPlayerSimulationPlusMiniMax2(object):
+class AIPlayerTwoStepBestPlusSimulation(object):
     def __init__(self, name, symbole, isAI=False):
         self.name = name
         self.symbole = symbole
@@ -33,15 +33,15 @@ class AIPlayerSimulationPlusMiniMax2(object):
         return cells
     
     def get_move(self,state,player):
-        root = MiniMax2(state=state, symbol=player)
-        hasbestmove, result = root.normal()
+        root = TwoStepBest(state=state, symbol=player)
+        hasbestmove, result = root.twostepbest()
         if hasbestmove:
             return result
         else:
             if len(result) == 0:  
                 root = Simulation(state=state, symbol=player)
-                selected_move = root.simulation(200)
+                selected_move = root.simulation(150)
             else:
                 root = Simulation(state=state, symbol=player, bad_actions=result)
-                selected_move = root.simulation(200)
+                selected_move = root.simulation(150)
         return selected_move

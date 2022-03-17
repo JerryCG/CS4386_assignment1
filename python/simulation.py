@@ -14,10 +14,10 @@ def is_game_over(state):
             break
     return over
 
-def game_result(self_score, opponent_score):
-    if(self_score>opponent_score):
+def get_results(self_score,opponent_score):
+    if self_score > opponent_score:
         return 1
-    elif(self_score<opponent_score):
+    elif self_score < opponent_score:
         return -1
     else:
         return 0
@@ -29,7 +29,8 @@ class Simulation(object):
         self.opponent_symbol = 'X' if self.self_symbol == 'O' else 'X'
         self.legal_actions = empty_cells(self.state)
         self.bad_actions = bad_actions
-        self.weights = []
+        self.nets = []
+        self.ws = []
 
     def simulation(self,num):
         num = num
@@ -39,6 +40,7 @@ class Simulation(object):
                     self.legal_actions.remove(bad_action)
         if len(self.legal_actions) != 1:
             for action in self.legal_actions:
+                net = 0.
                 w = 0.
                 state_copy = copy.copy(self.state)
                 for i in range(num):
@@ -66,9 +68,14 @@ class Simulation(object):
                             score = alignement(state_copy, random_move[0], random_move[1])
                             opponent_score+=score
                         turn = 1 - turn
-                    w+=game_result(self_score, opponent_score)
-                self.weights.append(w/num)
-            selected_move = self.legal_actions[np.argmax(self.weights)]
+                    net = net + self_score - opponent_score
+                    w += get_results(self_score, opponent_score)
+                self.nets.append(net)
+                self.ws.append(w)
+            m = max(self.ws)
+            w_best = [self.nets[i] for i, j in enumerate(self.ws) if j == m]
+            w_best_index = [i for i, j in enumerate(self.ws) if j == m]
+            selected_move = self.legal_actions[w_best_index[np.argmax(w_best)]]
         else:
             selected_move = self.legal_actions[0]
         return selected_move

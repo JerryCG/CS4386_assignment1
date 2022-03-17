@@ -7,13 +7,16 @@ import python.AIPlayerMCTS
 
 def is_game_over(state):
     over = True
-    for i in range(6):
-        for j in range(6):
-            if state[i][j] == None:
-                over = False
+    if python.AIPlayerMCTS.depth == 2:
+        return over
+    else:
+        for i in range(6):
+            for j in range(6):
+                if state[i][j] == None:
+                    over = False
+                    break
+            if over == False:
                 break
-        if over == False:
-            break
     return over
 
 def game_result(self_score, opponent_score):
@@ -70,6 +73,7 @@ class MCTSNode(object):
     def rollout(self):
         current_rollout_state = copy.copy(self.state)
         rollout_turn = 1 - python.AIPlayerMCTS.turn
+        python.AIPlayerMCTS.depth += 1
         while not is_game_over(current_rollout_state):
             possible_moves = empty_cells(current_rollout_state)
             action = self.rollout_policy(possible_moves)
@@ -78,9 +82,11 @@ class MCTSNode(object):
             if rollout_turn == 0:
                 python.AIPlayerMCTS.self_score+=score
                 rollout_turn = 1 - rollout_turn
+                python.AIPlayerMCTS.depth += 1
             else:
                 python.AIPlayerMCTS.opponent_score+=score
                 rollout_turn = 1 - rollout_turn
+                python.AIPlayerMCTS.depth += 1
         return game_result(python.AIPlayerMCTS.self_score, python.AIPlayerMCTS.opponent_score)
 
     def backpropagate(self, result):
@@ -90,6 +96,7 @@ class MCTSNode(object):
         else:
             self._results[-result] += 1.
         python.AIPlayerMCTS.turn = 1 - python.AIPlayerMCTS.turn
+        python.AIPlayerMCTS.depth += 1
         if self.parent:
             self.parent.backpropagate(result)
 

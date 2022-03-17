@@ -11,6 +11,7 @@ class MCTS:
             python.AIPlayerMCTS.turn = 0
             python.AIPlayerMCTS.self_score = 0
             python.AIPlayerMCTS.opponent_score = 0
+            python.AIPlayerMCTS.depth = 0
             v = self.tree_policy()
             reward = v.rollout()
             v.backpropagate(reward)
@@ -32,10 +33,13 @@ class MCTS:
                 if python.AIPlayerMCTS.turn == 0:
                     python.AIPlayerMCTS.self_score+=score
                     python.AIPlayerMCTS.turn = 1 - python.AIPlayerMCTS.turn
+                    python.AIPlayerMCTS.depth += 1
                 else:
                     python.AIPlayerMCTS.opponent_score+=score
                     python.AIPlayerMCTS.turn = 1 - python.AIPlayerMCTS.turn
+                    python.AIPlayerMCTS.depth += 1
                 current_node = current_node.best_child()
                 if current_node.is_terminal_node():
                     python.AIPlayerMCTS.turn = 1 - python.AIPlayerMCTS.turn
+                    python.AIPlayerMCTS.depth += 1
         return current_node

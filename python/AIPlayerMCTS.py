@@ -1,6 +1,8 @@
 import copy
 from math import inf as infinity
 from turtle import TurtleScreen
+
+from numpy import deprecate_with_doc
 from python.mcts import MCTS
 from python.mctsnode import MCTSNode
 
@@ -46,6 +48,8 @@ class AIPlayerMCTS(object):
         opponent_score = 0
         global turn
         turn = 0
+        global depth
+        depth = 0
         root = MCTSNode(state=state_copy)
         mcts = MCTS(root)
         best_node = mcts.best_action(1000)

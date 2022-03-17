@@ -254,19 +254,19 @@ def gameLoop(screen, p1, p2):
         # if player1 is human
         else:
             # Get the human player input
-            #tic = time.time()
+            tic = time.time()
             x, y = gui.playerInput(screen)
             # Check if the cell is not already used
             while not grid.isMoveAllowed(x, y):
                 x, y = gui.playerInput(screen)
-            #toc = time.time()
+            toc = time.time()
             grid.update(x, y, playerTurn.symbole)
             gui.drawSymbole(screen, (x, y), playerTurn.symbole)
             print("Player1 (Black,Human), move is:",x,y)
-        #print("Player1 (Black) Time:", (toc - tic))
-        #if (toc - tic) > TIME_LIMIT:
-            #print("Timed out, game over. Player2 wins.")
-            #return "-1"
+        print("Player1 (Black) Time:", (toc - tic))
+        if (toc - tic) > TIME_LIMIT:
+            print("Timed out, game over. Player2 wins.")
+            return "-1"
 
     while(not gridFull(grid.grid)):
         # Switch player
@@ -385,12 +385,12 @@ def gameLoop(screen, p1, p2):
                 print("Player1 (Black,PYTHON), move is:",x,y)
             else:
                 # Get the human player input
-                #tic = time.time()
+                tic = time.time()
                 x, y = gui.playerInput(screen)
                 # Check if the cell is not already used
                 while not grid.isMoveAllowed(x, y):
                     x, y = gui.playerInput(screen)
-                #toc = time.time()
+                toc = time.time()
                 grid.update(x, y, playerTurn.symbole)
                 gui.drawSymbole(screen, (x, y), playerTurn.symbole)
                 print("Player1 (Black,Human), move is:",x,y)
@@ -449,8 +449,8 @@ if __name__ == "__main__":
         p1.add_isAI(False)
     else:
         print("the first player is AI (PYTHON)")
-        from python.AIPlayerSimulationPlusMiniMax2 import AIPlayerSimulationPlusMiniMax2
-        p1 = AIPlayerSimulationPlusMiniMax2("AI1", "X", isAI=False)
+        from python.AIPlayerRandom import AIPlayerRandom
+        p1 = AIPlayerRandom("AI1", "X", isAI=False)
 
 
     #player2 is an AI player, which can be implemented by C++, Java or Python
@@ -472,8 +472,8 @@ if __name__ == "__main__":
         p2.add_symbole("O")
     else:
         print("the second player is AI (PYTHON)")
-        from python.AIPlayerSimulationPlusMiniMax2 import AIPlayerSimulationPlusMiniMax2
-        p2 = AIPlayerSimulationPlusMiniMax2("AI2", "O", isAI=True)
+        from python.AIPlayerTwoStepBestPlusSimulation import AIPlayerTwoStepBestPlusSimulation
+        p2 = AIPlayerTwoStepBestPlusSimulation("AI2", "O", isAI=True)
         
     screen = gui.init()
     #determine the first player

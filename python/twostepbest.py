@@ -22,7 +22,7 @@ def game_result(self_score, opponent_score):
     else:
         return 0
 
-class MiniMax2(object):
+class TwoStepBest(object):
     def __init__(self, state, symbol):
         self.state = state
         self.self_symbol = symbol
@@ -33,7 +33,7 @@ class MiniMax2(object):
         self.best_action = None
         self.bad_actions = []
 
-    def normal(self):
+    def twostepbest(self):
         for self_action in self.legal_actions:
             net_score = 0
             state_copy = copy.copy(self.state)
